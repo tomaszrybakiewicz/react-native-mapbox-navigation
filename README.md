@@ -1,3 +1,31 @@
+# Android NDK 32 compatible fork of react-native-mapbox-navigation
+
+This repository is a fork of https://github.com/homeeondemand/react-native-mapbox-navigation and https://github.com/homeeondemand/react-native-mapbox-navigation/pull/121
+
+Also uses mapbox preview release of NDK 23 compatible navigation SDK.
+
+To adopt, please do:
+`yarn add https://github.com/mfazekas/react-native-mapbox-navigation#ndk23plus`
+
+also please add the following to your android/gradle.build:
+```
+allprojects {
+    repositories {
+        ...
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/snapshots/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                username = "mapbox"
+                password = project.properties['MAPBOX_DOWNLOADS_TOKEN'] ?: ""
+            }
+        }
+    }
+}
+```
+
 # React Native Mapbox Navigation
 
 <img alt="React Native Mapbox Navigation" src="./img/ios-nav.png?v=2" width="300" align="right" />
@@ -217,6 +245,16 @@ allprojects {
                 // This should always be `mapbox` (not your username).
                 username = "mapbox"
                 // Use the secret token you stored in gradle.properties as the password
+                password = project.properties['MAPBOX_DOWNLOADS_TOKEN'] ?: ""
+            }
+        }
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/snapshots/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                username = "mapbox"
                 password = project.properties['MAPBOX_DOWNLOADS_TOKEN'] ?: ""
             }
         }
